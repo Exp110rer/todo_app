@@ -18,17 +18,24 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from rest_framework.routers import DefaultRouter
-from todo.views import ProjectViewSet, todoViewSet
+from todo.views import ProjectModelViewSet, todoViewSet
+from authors.views import AuthorModelViewSet
+from authapp.views import PortaUserModelViewSet
 
 
 router = DefaultRouter()
-router.register('projects', ProjectViewSet)
+router.register('projects', ProjectModelViewSet)
 router.register('todo', todoViewSet)
+router.register('users', PortaUserModelViewSet)
+
+router_author = DefaultRouter()
+router_author.register('authors', AuthorModelViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
-    path('api/', include(router.urls))
+    path('api/', include(router.urls)),
+    path('api-authors/', include(router_author.urls)),
 ]
 
 if settings.DEBUG:
